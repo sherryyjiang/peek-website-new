@@ -1,0 +1,33 @@
+{
+  "mode": "edit",
+  "componentId": "412449284668157952",
+  "projectId": "412449171589701632",
+  "selectedRevisionId": "412740815249633280",
+  "baseRevisionId": "412740815249633280",
+  "jobId": "384812403151491072-external-agent-412740844643299328",
+  "generatedName": "warm-year-6379",
+  "name": "Peek Landing Page",
+  "selectedImages": [],
+  "editableFiles": [
+    {
+      "path": "src/App.tsx",
+      "sha256": "fec8a42cc05e10fa5666b8faec98b624d2f54ff93dfb6a085208cb0b46672da1"
+    },
+    {
+      "path": "src/components/generated/PeekLandingPage.tsx",
+      "sha256": "99302339909093f2c15314f0c45b04e356ce50edd2235f3ee07330f25bce21a1"
+    },
+    {
+      "path": "src/components/generated/PeekMascot.tsx",
+      "sha256": "7236fd92284c3839a5fa7b2a005f9c6c4dcb273e7340638756dabdb0490899d1"
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "dcd25c73fcce56ea659847290e5c7fa4b2739bcffea3af627fde6b8d23624252"
+    }
+  ],
+  "dimensions": {
+    "width": 1440,
+    "height": 5600
+  }
+}

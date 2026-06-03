@@ -1,0 +1,11 @@
+node_modules/
+.DS_Store
+.cursor/
+.claude/
+.qoder/
+.kiro/
+.gemini/
+.agents/
+.trae/
+.trae-cn/
+.pi/
