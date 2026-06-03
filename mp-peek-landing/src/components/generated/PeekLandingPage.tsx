@@ -51,25 +51,144 @@ function Reveal({
       {children}
     </div>;
 }
-function Sticker({
-  children,
-  rotate = 0,
-  className = '',
-  style
-}: {
-  children: React.ReactNode;
-  rotate?: number;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold sticker ${className}`} style={{
-    transform: `rotate(${rotate}deg)`,
-    ...style
-  }}>
-      
-      {children}
+// ---------------------------------------------------------------------------
+// Real Peek category stickers — pulled from the app's tag taxonomy
+// (BluejayFinance/peek-mono-4 → convex/core/tags/labels.ts). These are the
+// same "worth-it" buckets the app sorts your spending into.
+// ---------------------------------------------------------------------------
+interface CategorySticker {
+  label: string;
+  emoji: string;
+  bg: string;
+  fg: string;
+}
+const STICKER_THEMES = {
+  green: {
+    bg: GREEN,
+    fg: '#06351E'
+  },
+  orange: {
+    bg: '#FE875C',
+    fg: '#4A1500'
+  },
+  yellow: {
+    bg: '#FFE92B',
+    fg: PURPLE
+  },
+  white: {
+    bg: '#FFFFFF',
+    fg: PURPLE
+  },
+  red: {
+    bg: RED,
+    fg: '#4A0014'
+  },
+  purple: {
+    bg: PURPLE,
+    fg: CREAM
+  }
+} as const;
+type ThemeName = keyof typeof STICKER_THEMES;
+function cat(label: string, emoji: string, theme: ThemeName): CategorySticker {
+  return {
+    label,
+    emoji,
+    ...STICKER_THEMES[theme]
+  };
+}
+// Master list (display names match the app's TAG_VALUE_DISPLAY_NAMES exactly)
+const CATEGORY_STICKERS: CategorySticker[] = [cat('Ritual', '☕️', 'white'), cat('Comfort', '🛋️', 'orange'), cat('Self Care', '🧖', 'green'), cat('Celebration', '🎉', 'yellow'), cat('Convenience', '⏱️', 'purple'), cat('Impulse Buy', '⚡', 'red'), cat('Necessity', '📋', 'white'), cat('Aesthetic', '🎨', 'green'), cat('Self Reward', '⭐', 'orange'), cat('Social', '🧋', 'yellow'), cat('Gift', '🎁', 'red'), cat('Experience', '🎟️', 'purple'), cat('Hobby', '🧶', 'green'), cat('Productivity', '💻', 'white'), cat('FOMO', '😼', 'orange'), cat('Entertainment', '🎬', 'yellow')];
+
+// ---------------------------------------------------------------------------
+// Hero stickers — real categories that "burst" outward on scroll.
+// Scroll progress drives an outward translate + spin + fade for each sticker.
+// ---------------------------------------------------------------------------
+interface HeroStickerCfg extends CategorySticker {
+  left: string;
+  top: string;
+  rot: number;
+  dx: number;
+  dy: number;
+  spin: number;
+  delay: number;
+  show: string;
+}
+function hero(name: string, left: string, top: string, rot: number, dx: number, dy: number, spin: number, delay: number, show = ''): HeroStickerCfg {
+  const base = CATEGORY_STICKERS.find(c => c.label === name)!;
+  return {
+    ...base,
+    left,
+    top,
+    rot,
+    dx,
+    dy,
+    spin,
+    delay,
+    show
+  };
+}
+const HERO_STICKERS: HeroStickerCfg[] = [hero('Ritual', '4%', '15%', -8, -170, -70, -22, 0), hero('Self Reward', '1%', '47%', 6, -195, 5, 18, 0.6), hero('Necessity', '5%', '82%', -6, -155, 140, -16, 0.3), hero('Self Care', '23%', '5%', 5, -55, -185, 20, 0.9, 'hidden sm:block'), hero('Gift', '49%', '3%', -4, 0, -195, -18, 1.1, 'hidden md:block'), hero('Impulse Buy', '85%', '9%', 7, 185, -85, 24, 0.2), hero('Convenience', '92%', '39%', -6, 205, 0, -20, 0.7, 'hidden sm:block'), hero('Celebration', '89%', '64%', 4, 190, 95, 16, 0.45), hero('Comfort', '73%', '91%', -5, 110, 165, -22, 0.5, 'hidden sm:block'), hero('Aesthetic', '43%', '93%', 3, 0, 185, 14, 0.15), hero('Social', '21%', '89%', -3, -95, 160, -18, 0.8, 'hidden md:block'), hero('Hobby', '63%', '87%', 6, 75, 160, 20, 1, 'hidden lg:block')];
+function useHeroScroll(ref: React.RefObject<HTMLDivElement | null>) {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
+      const el = ref.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const h = rect.height || 1;
+      // 0 while hero fills the viewport → 1 once scrolled ~3/4 of a hero up
+      const p = Math.min(1, Math.max(0, -rect.top / (h * 0.7)));
+      setProgress(p);
+    };
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [ref]);
+  return progress;
+}
+function HeroStickers() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const p = useHeroScroll(ref);
+  return <div ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
+      {HERO_STICKERS.map((s, i) => <div key={s.label + i} className={`absolute anim-float ${s.show}`} style={{
+      left: s.left,
+      top: s.top,
+      animationDelay: `${s.delay}s`,
+      '--r': `${s.rot}deg`
+    } as React.CSSProperties}>
+          <div style={{
+        transform: `translate(${s.dx * p}px, ${s.dy * p}px) rotate(${s.spin * p}deg) scale(${1 + 0.18 * p})`,
+        opacity: 1 - p * 0.92,
+        willChange: 'transform, opacity'
+      }}>
+            <span className="ff-display inline-flex select-none items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-extrabold sticker sm:text-sm" style={{
+          background: s.bg,
+          color: s.fg
+        }}>
+              <span aria-hidden="true">{s.emoji}</span>
+              {s.label}
+            </span>
+          </div>
+        </div>)}
     </div>;
 }
+
 // ---------------------------------------------------------------------------
 // Interactive: rate a transaction "worth it / not worth it"
 // ---------------------------------------------------------------------------
@@ -468,7 +587,13 @@ function PlanCard() {
 // App Store download badge (real CTA, Apple-style)
 // ---------------------------------------------------------------------------
 const APP_STORE_URL = 'https://apps.apple.com/app/peek';
-function AppleGlyph({ size = 22, color = 'currentColor' }: { size?: number; color?: string }) {
+function AppleGlyph({
+  size = 22,
+  color = 'currentColor'
+}: {
+  size?: number;
+  color?: string;
+}) {
   return <svg width={size} height={size} viewBox="0 0 384 512" fill={color} aria-hidden="true">
       <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zM262.1 104.5c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
     </svg>;
@@ -546,27 +671,10 @@ export const PeekLandingPage = () => {
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="dotgrid pointer-events-none absolute inset-0 opacity-60" />
-        {/* floating stickers */}
-        <Sticker rotate={-8} className="absolute left-[6%] top-[18%] hidden lg:flex" style={{
-        background: GREEN,
-        color: '#06351E'
-      }}>
-          ✓ worth it
-        </Sticker>
-        <Sticker rotate={7} className="absolute right-[7%] top-[26%] hidden lg:flex" style={{
-        background: RED,
-        color: '#4a0014'
-      }}>
-          ✕ not worth it
-        </Sticker>
-        <Sticker rotate={-5} className="absolute bottom-[12%] left-[10%] hidden xl:flex" style={{
-        background: '#fff',
-        color: PURPLE
-      }}>
-          ☕️ #ritual
-        </Sticker>
+        {/* real category stickers — burst outward on scroll */}
+        <HeroStickers />
 
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 pb-20 pt-14 md:pt-20 lg:grid-cols-2">
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-10 px-5 pb-20 pt-14 md:pt-20 lg:grid-cols-2">
           <div>
             <span className="ff-hand inline-block text-2xl" style={{
             color: RED,
@@ -903,13 +1011,17 @@ export const PeekLandingPage = () => {
     }}>
         <div className="marquee-track flex w-max gap-4 whitespace-nowrap">
           {[...Array(2)].map((_, dup) => <div key={dup} className="flex gap-4">
-              {['☕️ ritual', '🛒 impulse', '🍜 comfort', '🚗 convenience', '🎟️ celebration', '🌙 late-night', '✨ aesthetic'].map((t, i) => <span key={`${dup}-${i}`} className="ff-display rounded-full px-4 py-1.5 text-sm font-bold" style={{
-            background: i % 2 ? GREEN : '#FE875C',
-            color: PURPLE
-          }}>
-                
-                    {t}
-                  </span>)}
+              {CATEGORY_STICKERS.map((c, i) => {
+            // purple pills vanish on the purple marquee — show them as cream there
+            const onPurple = c.bg.toUpperCase() === PURPLE;
+            return <span key={`${dup}-${i}`} className="ff-display inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-extrabold" style={{
+              background: onPurple ? CREAM : c.bg,
+              color: onPurple ? PURPLE : c.fg
+            }}>
+                  <span aria-hidden="true">{c.emoji}</span>
+                  {c.label}
+                </span>;
+          })}
             </div>)}
         </div>
       </div>

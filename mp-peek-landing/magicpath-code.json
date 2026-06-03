@@ -2,9 +2,9 @@
   "mode": "edit",
   "componentId": "412449284668157952",
   "projectId": "412449171589701632",
-  "selectedRevisionId": "412760013136871424",
-  "baseRevisionId": "412760013136871424",
-  "jobId": "384812403151491072-external-agent-412760013136871425",
+  "selectedRevisionId": "412763788597669888",
+  "baseRevisionId": "412763788597669888",
+  "jobId": "384812403151491072-external-agent-412764764494766080",
   "generatedName": "warm-year-6379",
   "name": "Peek Landing Page",
   "selectedImages": [],
@@ -15,19 +15,15 @@
     },
     {
       "path": "src/components/generated/PeekLandingPage.tsx",
-      "sha256": "ed9ebe87870b7576f6b7db24fe423e6c3cf9dc50972a1498785cda48d5362a1d"
+      "sha256": "99576abfbc56c92a3fe4798d67961bebaba9f41fbece94db1d6097a1125deaa8"
     },
     {
       "path": "src/components/generated/PeekMascot.tsx",
-      "sha256": "7236fd92284c3839a5fa7b2a005f9c6c4dcb273e7340638756dabdb0490899d1"
+      "sha256": "c3699db40215680d3b7b3ab702850338eaf10862b588dec08cc937baa7c34b10"
     },
     {
       "path": "src/index.css",
-      "sha256": "c240cdb5b1d185723d341d4d5cb4eb1e3e391fe9624f311da62f0f02d8df07a6"
+      "sha256": "1cf10e54466bca8907d821b64de51fcef84d04bf5c84386b00938dcff1599e11"
     }
-  ],
-  "dimensions": {
-    "width": 1440,
-    "height": 5600
-  }
+  ]
 }
