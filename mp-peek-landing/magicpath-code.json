@@ -2,9 +2,9 @@
   "mode": "edit",
   "componentId": "412449284668157952",
   "projectId": "412449171589701632",
-  "selectedRevisionId": "412779235808260096",
-  "baseRevisionId": "412779235808260096",
-  "jobId": "384812403151491072-external-agent-412783672157171712",
+  "selectedRevisionId": "412826581967441920",
+  "baseRevisionId": "412826581967441920",
+  "jobId": "384812403151491072-external-agent-412827870533144576",
   "generatedName": "warm-year-6379",
   "name": "Peek Landing Page",
   "selectedImages": [],
@@ -15,19 +15,19 @@
     },
     {
       "path": "assets/screen-blindbox.png",
-      "sha256": "ca3b9463bdb92e536203b059aa295d42d26e6c6c7f9bc2e8f524fa2fe3838c80"
+      "sha256": "884729c9b34d50d4d4a32a7f824afd256189cc4d4a244147369072594ad26b47"
     },
     {
       "path": "assets/screen-plans.png",
-      "sha256": "0b92df1b55a1863b7f41f1d6dfc2125fa68b02fde8a915aa5fba7072b8716660"
+      "sha256": "a0c80c6d6d598ea9f1a0a586b33f61cceb4fcffde3daca0e49c1172cbd2cff12"
     },
     {
       "path": "assets/screen-stories.png",
-      "sha256": "acf3d92d4320de6b52b540de0c9ea621509e64f194d6522bd47eed96e99fc114"
+      "sha256": "b6369c74d1c7732ef00c2d7af7a646cb072e833c352550adae04a834b900d137"
     },
     {
       "path": "assets/screen-worthit.png",
-      "sha256": "fdd5875d96ce4e5d39cc95af728564fbd48fa0482c8b3ddc5593ee1bde9b3c43"
+      "sha256": "4acba45ae2de5c3c66fa5bb9daae8616a49ad73d1228e5d4c06d9b467eced290"
     },
     {
       "path": "assets/stickers/aesthetic.png",
@@ -99,7 +99,7 @@
     },
     {
       "path": "src/components/generated/PeekLandingPage.tsx",
-      "sha256": "b9e0423acf3bcd8fa9f959436f4d447e1d9f7730dc030a55715fde396ef3824f"
+      "sha256": "80fb0f6011fcd09d994da22d9e5bae8ee16a0ecaad72962fc48338dadc28e9ef"
     },
     {
       "path": "src/components/generated/PeekMascot.tsx",

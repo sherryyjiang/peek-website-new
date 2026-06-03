@@ -1,29 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import { PeekMascot } from './PeekMascot';
-
-// Real Peek category stickers — die-cut vinyl artwork sourced from the app itself
-// (Convex `tags.imageUrl`, generated via the same fal.ai → BiRefNet → Cloudinary
-// pipeline in BluejayFinance/peek-mono-4). One PNG per "worth-it" category.
-import ritualSticker from '../../../assets/stickers/ritual.png';
-import comfortSticker from '../../../assets/stickers/comfort.png';
-import selfCareSticker from '../../../assets/stickers/self-care.png';
-import celebrationSticker from '../../../assets/stickers/celebration.png';
-import convenienceSticker from '../../../assets/stickers/convenience.png';
-import impulseBuySticker from '../../../assets/stickers/impulse-buy.png';
-import necessitySticker from '../../../assets/stickers/necessity.png';
-import aestheticSticker from '../../../assets/stickers/aesthetic.png';
-import selfRewardSticker from '../../../assets/stickers/self-reward.png';
-import socialSticker from '../../../assets/stickers/social.png';
-import giftSticker from '../../../assets/stickers/gift.png';
-import experienceSticker from '../../../assets/stickers/experience.png';
-import hobbySticker from '../../../assets/stickers/hobby.png';
-import productivitySticker from '../../../assets/stickers/productivity.png';
-import fomoSticker from '../../../assets/stickers/fomo.png';
-import entertainmentSticker from '../../../assets/stickers/entertainment.png';
 import worthitScreen from '../../../assets/screen-worthit.png';
 import blindboxScreen from '../../../assets/screen-blindbox.png';
 import storiesScreen from '../../../assets/screen-stories.png';
 import plansScreen from '../../../assets/screen-plans.png';
+
+// Real Peek category stickers — die-cut vinyl artwork sourced from the app itself
+// (Convex `tags.imageUrl`, generated via the same fal.ai → BiRefNet → Cloudinary
+// pipeline in BluejayFinance/peek-mono-4). One PNG per "worth-it" category.
+const ritualSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/23872f1941c405af3e23f80c7366f44741c2b0f7fa33aaab01ad78bd6f1b3fc5.png";
+const comfortSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/8445153c571e0634920959163c33dad93a6cab6f86cccc6ae59606e4caff52a0.png";
+const selfCareSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/ff07985daaece6b0349534d932211f0d6d25ab30dbafe045de16bcd83ba8ffa7.png";
+const celebrationSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/2837e6ec98fa64c77e2ca86b80e04d77da89f63922d9d735c96c43cf8ba482ad.png";
+const convenienceSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/47abf56081fae9401c14ff2f36744bd6c9af65aeec6e82b50e41d2afebd6cdf8.png";
+const impulseBuySticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/cd08d0613db5ce9d2c73a6dd506271b5ff6e502c925b1aeb5dcc45837d99b98c.png";
+const necessitySticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/0bb0c45b98dce3d2a164578001eb10978f448955bba34da0284c6d47a14f090c.png";
+const aestheticSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/34321d7f28823ade73dfcbd30a15af53c61ea0e9f7e33455559f808706e14816.png";
+const selfRewardSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/25f7fa64972e554855c41be32409245aefc0eef9f2ef6444a49d49b5bdea8eab.png";
+const socialSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/9d5c4955a8e749561c58965611772ce864a1d3602855dd4d750e04b0d96d2ec6.png";
+const giftSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/bc1548c56159df82d0fbebe3ef5c1907dbbf17aff8620862a15c2287638569e5.png";
+const experienceSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/1e1aa6c491a5230c352b6d905c3091eda527656c3e6304c96f4c32a68de25b27.png";
+const hobbySticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/c7ec53c8bf6b83c3f3774da0f51f3b9e0ba8605c24bcb79c037b8b8e51b0de11.png";
+const productivitySticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/f03be0d455d632434f07aa5537d1afb85c6bdc11143dc01bf657e86c4f3ffa9a.png";
+const fomoSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/fcde49210faef8c8496904f494b0cf9a8690b985a010b0cf7da376a087ff428a.png";
+const entertainmentSticker = "https://storage.googleapis.com/storage.magicpath.ai/component-assets/412449284668157952/412779235808260096/e37e4d7ca9afc04a66f5cdde44da83cb2f4efee92398776961aa2733ec5ea625.png";
 
 // Maps a category display name → its die-cut sticker artwork.
 const STICKER_SRC: Record<string, string> = {
@@ -224,24 +224,28 @@ function useHeroScroll(ref: React.RefObject<HTMLDivElement | null>) {
 function HeroStickers() {
   const ref = useRef<HTMLDivElement | null>(null);
   const p = useHeroScroll(ref);
-  return <div ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-      {HERO_STICKERS.map((s, i) => <div key={s.label + i} className={`absolute anim-float ${s.show}`} style={{
-      left: s.left,
-      top: s.top,
-      animationDelay: `${s.delay}s`,
-      '--r': `${s.rot}deg`
-    } as React.CSSProperties}>
-          <div style={{
-        transform: `translate(${s.dx * p}px, ${s.dy * p}px) rotate(${s.spin * p}deg) scale(${1 + 0.18 * p})`,
-        opacity: 1 - p * 0.92,
+  return <div ref={ref} aria-hidden="true" className="pointer-events-none absolute inset-0 z-0" style={{
+    overflow: 'visible'
+  }}>
+    {HERO_STICKERS.map(s => {
+      const tx = s.dx * p;
+      const ty = s.dy * p;
+      const rotate = s.rot + s.spin * p;
+      const opacity = 1 - p * 0.85;
+      return <img key={s.label} src={STICKER_SRC[s.label]} alt={s.label} draggable={false} loading="eager" decoding="async" className={`select-none ${s.show}`} style={{
+        position: 'absolute',
+        left: s.left,
+        top: s.top,
+        width: 88,
+        height: 'auto',
+        transform: `translate(${tx}px, ${ty}px) rotate(${rotate}deg)`,
+        opacity,
+        filter: 'drop-shadow(0 8px 16px rgba(55,0,75,0.28))',
+        transition: 'none',
         willChange: 'transform, opacity'
-      }}>
-            <img src={STICKER_SRC[s.label]} alt="" draggable={false} loading="lazy" decoding="async" className="h-auto w-20 select-none sm:w-24 lg:w-28" style={{
-          filter: 'drop-shadow(0 12px 18px rgba(55,0,75,0.28))'
-        }} />
-          </div>
-        </div>)}
-    </div>;
+      }} />;
+    })}
+  </div>;
 }
 
 // ---------------------------------------------------------------------------
@@ -302,7 +306,7 @@ function AppScreen({
   rotate?: number;
   className?: string;
 }) {
-  return <img src={src} alt={alt} loading="lazy" decoding="async" width={685} height={1400} draggable={false} className={`h-auto w-full select-none ${className}`} style={{
+  return <img src={src} alt={alt} loading="lazy" decoding="async" width={685} height={1400} draggable={false} className={`block h-auto w-full select-none ${className}`} style={{
     transform: `rotate(${rotate}deg)`,
     filter: 'drop-shadow(0 28px 44px rgba(55,0,75,0.30))'
   }} />;
@@ -351,7 +355,9 @@ export const PeekLandingPage = () => {
       </header>
 
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <section id="hero" className="relative" style={{
+      overflow: 'visible'
+    }}>
         <div className="dotgrid pointer-events-none absolute inset-0 opacity-60" />
         {/* real category stickers — burst outward on scroll */}
         <HeroStickers />
@@ -367,10 +373,10 @@ export const PeekLandingPage = () => {
             <h1 className="ff-display mt-3 text-[clamp(2.6rem,7vw,3.75rem)] font-extrabold leading-[0.98] text-balance" style={{
             color: PURPLE
           }}>
-              Your bank sees charges.{' '}
+              Your bank sees transactions.{' '}
               <span style={{
               color: ORANGE_CTA
-            }}>Peek shows the why.</span>
+            }}>Peek sees you.</span>
             </h1>
             <p className="mt-5 max-w-md text-lg" style={{
             color: `${PURPLE}cc`
@@ -438,7 +444,7 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display ml-auto max-w-md text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: PURPLE
             }}>
-                Budgets make it about math.
+                Budgeting apps think the problem is math.
               </h2>
               <p className="ff-hand ml-auto mt-6 max-w-sm text-2xl text-pretty" style={{
               color: RED
