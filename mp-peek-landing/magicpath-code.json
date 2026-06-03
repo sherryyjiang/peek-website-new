@@ -2,9 +2,9 @@
   "mode": "edit",
   "componentId": "412449284668157952",
   "projectId": "412449171589701632",
-  "selectedRevisionId": "412740815249633280",
-  "baseRevisionId": "412740815249633280",
-  "jobId": "384812403151491072-external-agent-412740844643299328",
+  "selectedRevisionId": "412760013136871424",
+  "baseRevisionId": "412760013136871424",
+  "jobId": "384812403151491072-external-agent-412760013136871425",
   "generatedName": "warm-year-6379",
   "name": "Peek Landing Page",
   "selectedImages": [],
@@ -15,7 +15,7 @@
     },
     {
       "path": "src/components/generated/PeekLandingPage.tsx",
-      "sha256": "99302339909093f2c15314f0c45b04e356ce50edd2235f3ee07330f25bce21a1"
+      "sha256": "ed9ebe87870b7576f6b7db24fe423e6c3cf9dc50972a1498785cda48d5362a1d"
     },
     {
       "path": "src/components/generated/PeekMascot.tsx",
@@ -23,7 +23,7 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "dcd25c73fcce56ea659847290e5c7fa4b2739bcffea3af627fde6b8d23624252"
+      "sha256": "c240cdb5b1d185723d341d4d5cb4eb1e3e391fe9624f311da62f0f02d8df07a6"
     }
   ],
   "dimensions": {
