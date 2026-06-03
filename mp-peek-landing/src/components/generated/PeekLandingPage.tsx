@@ -957,8 +957,7 @@ export const PeekLandingPage = () => {
     }}>
         <div className="mx-auto max-w-4xl px-5 py-24 text-center">
           <Reveal>
-            <PeekMascot size={84} className="anim-bob mx-auto" expression="wink" />
-            <h2 className="ff-display mx-auto mt-6 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl" style={{
+            <h2 className="ff-display mx-auto max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl" style={{
             color: CREAM
           }}>
               We never tell you who you are without your permission.
