@@ -2,9 +2,9 @@
   "mode": "edit",
   "componentId": "412449284668157952",
   "projectId": "412449171589701632",
-  "selectedRevisionId": "412774787631443968",
-  "baseRevisionId": "412774787631443968",
-  "jobId": "384812403151491072-external-agent-412774787631443969",
+  "selectedRevisionId": "412779235808260096",
+  "baseRevisionId": "412779235808260096",
+  "jobId": "384812403151491072-external-agent-412783672157171712",
   "generatedName": "warm-year-6379",
   "name": "Peek Landing Page",
   "selectedImages": [],
@@ -14,16 +14,96 @@
       "sha256": "5dc7dff1d2c328be6abf40c1028fd89b55531b1538623c3d8394c21249dba56f"
     },
     {
+      "path": "assets/screen-blindbox.png",
+      "sha256": "ca3b9463bdb92e536203b059aa295d42d26e6c6c7f9bc2e8f524fa2fe3838c80"
+    },
+    {
+      "path": "assets/screen-plans.png",
+      "sha256": "0b92df1b55a1863b7f41f1d6dfc2125fa68b02fde8a915aa5fba7072b8716660"
+    },
+    {
+      "path": "assets/screen-stories.png",
+      "sha256": "acf3d92d4320de6b52b540de0c9ea621509e64f194d6522bd47eed96e99fc114"
+    },
+    {
+      "path": "assets/screen-worthit.png",
+      "sha256": "fdd5875d96ce4e5d39cc95af728564fbd48fa0482c8b3ddc5593ee1bde9b3c43"
+    },
+    {
+      "path": "assets/stickers/aesthetic.png",
+      "sha256": "34321d7f28823ade73dfcbd30a15af53c61ea0e9f7e33455559f808706e14816"
+    },
+    {
+      "path": "assets/stickers/celebration.png",
+      "sha256": "2837e6ec98fa64c77e2ca86b80e04d77da89f63922d9d735c96c43cf8ba482ad"
+    },
+    {
+      "path": "assets/stickers/comfort.png",
+      "sha256": "8445153c571e0634920959163c33dad93a6cab6f86cccc6ae59606e4caff52a0"
+    },
+    {
+      "path": "assets/stickers/convenience.png",
+      "sha256": "47abf56081fae9401c14ff2f36744bd6c9af65aeec6e82b50e41d2afebd6cdf8"
+    },
+    {
+      "path": "assets/stickers/entertainment.png",
+      "sha256": "e37e4d7ca9afc04a66f5cdde44da83cb2f4efee92398776961aa2733ec5ea625"
+    },
+    {
+      "path": "assets/stickers/experience.png",
+      "sha256": "1e1aa6c491a5230c352b6d905c3091eda527656c3e6304c96f4c32a68de25b27"
+    },
+    {
+      "path": "assets/stickers/fomo.png",
+      "sha256": "fcde49210faef8c8496904f494b0cf9a8690b985a010b0cf7da376a087ff428a"
+    },
+    {
+      "path": "assets/stickers/gift.png",
+      "sha256": "bc1548c56159df82d0fbebe3ef5c1907dbbf17aff8620862a15c2287638569e5"
+    },
+    {
+      "path": "assets/stickers/hobby.png",
+      "sha256": "c7ec53c8bf6b83c3f3774da0f51f3b9e0ba8605c24bcb79c037b8b8e51b0de11"
+    },
+    {
+      "path": "assets/stickers/impulse-buy.png",
+      "sha256": "cd08d0613db5ce9d2c73a6dd506271b5ff6e502c925b1aeb5dcc45837d99b98c"
+    },
+    {
+      "path": "assets/stickers/necessity.png",
+      "sha256": "0bb0c45b98dce3d2a164578001eb10978f448955bba34da0284c6d47a14f090c"
+    },
+    {
+      "path": "assets/stickers/productivity.png",
+      "sha256": "f03be0d455d632434f07aa5537d1afb85c6bdc11143dc01bf657e86c4f3ffa9a"
+    },
+    {
+      "path": "assets/stickers/ritual.png",
+      "sha256": "23872f1941c405af3e23f80c7366f44741c2b0f7fa33aaab01ad78bd6f1b3fc5"
+    },
+    {
+      "path": "assets/stickers/self-care.png",
+      "sha256": "ff07985daaece6b0349534d932211f0d6d25ab30dbafe045de16bcd83ba8ffa7"
+    },
+    {
+      "path": "assets/stickers/self-reward.png",
+      "sha256": "25f7fa64972e554855c41be32409245aefc0eef9f2ef6444a49d49b5bdea8eab"
+    },
+    {
+      "path": "assets/stickers/social.png",
+      "sha256": "9d5c4955a8e749561c58965611772ce864a1d3602855dd4d750e04b0d96d2ec6"
+    },
+    {
       "path": "src/App.tsx",
       "sha256": "fec8a42cc05e10fa5666b8faec98b624d2f54ff93dfb6a085208cb0b46672da1"
     },
     {
       "path": "src/components/generated/PeekLandingPage.tsx",
-      "sha256": "37a408765ff3e7a5598f3e28fd3e607c5bd5c273a92475be5795fb33f10a4e9d"
+      "sha256": "b9e0423acf3bcd8fa9f959436f4d447e1d9f7730dc030a55715fde396ef3824f"
     },
     {
       "path": "src/components/generated/PeekMascot.tsx",
-      "sha256": "b1c962ed49c874564cc3a4009f13762fe33ef50ae950ac64fc5af824dc538554"
+      "sha256": "f02c033413bfa1926a93c978d6687c577b6884557c5afb7ee2d5f8c516ee6d95"
     },
     {
       "path": "src/index.css",

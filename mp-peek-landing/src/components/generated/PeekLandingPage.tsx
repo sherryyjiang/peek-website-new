@@ -1,6 +1,50 @@
 import { useEffect, useRef, useState } from 'react';
 import { PeekMascot } from './PeekMascot';
 
+// Real Peek category stickers — die-cut vinyl artwork sourced from the app itself
+// (Convex `tags.imageUrl`, generated via the same fal.ai → BiRefNet → Cloudinary
+// pipeline in BluejayFinance/peek-mono-4). One PNG per "worth-it" category.
+import ritualSticker from '../../../assets/stickers/ritual.png';
+import comfortSticker from '../../../assets/stickers/comfort.png';
+import selfCareSticker from '../../../assets/stickers/self-care.png';
+import celebrationSticker from '../../../assets/stickers/celebration.png';
+import convenienceSticker from '../../../assets/stickers/convenience.png';
+import impulseBuySticker from '../../../assets/stickers/impulse-buy.png';
+import necessitySticker from '../../../assets/stickers/necessity.png';
+import aestheticSticker from '../../../assets/stickers/aesthetic.png';
+import selfRewardSticker from '../../../assets/stickers/self-reward.png';
+import socialSticker from '../../../assets/stickers/social.png';
+import giftSticker from '../../../assets/stickers/gift.png';
+import experienceSticker from '../../../assets/stickers/experience.png';
+import hobbySticker from '../../../assets/stickers/hobby.png';
+import productivitySticker from '../../../assets/stickers/productivity.png';
+import fomoSticker from '../../../assets/stickers/fomo.png';
+import entertainmentSticker from '../../../assets/stickers/entertainment.png';
+import worthitScreen from '../../../assets/screen-worthit.png';
+import blindboxScreen from '../../../assets/screen-blindbox.png';
+import storiesScreen from '../../../assets/screen-stories.png';
+import plansScreen from '../../../assets/screen-plans.png';
+
+// Maps a category display name → its die-cut sticker artwork.
+const STICKER_SRC: Record<string, string> = {
+  Ritual: ritualSticker,
+  Comfort: comfortSticker,
+  'Self Care': selfCareSticker,
+  Celebration: celebrationSticker,
+  Convenience: convenienceSticker,
+  'Impulse Buy': impulseBuySticker,
+  Necessity: necessitySticker,
+  Aesthetic: aestheticSticker,
+  'Self Reward': selfRewardSticker,
+  Social: socialSticker,
+  Gift: giftSticker,
+  Experience: experienceSticker,
+  Hobby: hobbySticker,
+  Productivity: productivitySticker,
+  FOMO: fomoSticker,
+  Entertainment: entertainmentSticker
+};
+
 // ---------------------------------------------------------------------------
 // Peek — marketing / explainer landing page
 // Direction: "Sticker Scrapbook" — matches the App Store feel
@@ -13,6 +57,21 @@ const GREEN = '#2EEA84';
 const RED = '#FF4D6D';
 // Darkened orange for white-text CTAs + accent text on cream (passes large-text AA).
 const ORANGE_CTA = '#E85C00';
+
+// ---------------------------------------------------------------------------
+// Real Peek app screens (official assets from the Peek Figma "latest" set).
+// Synced into /assets and rewritten to stable URLs on `code submit`.
+//   worthit  → "what made this move?" worth-it tagging + last-30-days grid
+//   blindbox → tap-to-collect insight reward / blind box
+//   stories  → spending story ("your two selves", weekday vs weekend)
+//   plans    → monthly caps that keep the spending you actually value
+// ---------------------------------------------------------------------------
+const SCREENS = {
+  worthit: worthitScreen,
+  blindbox: blindboxScreen,
+  stories: storiesScreen,
+  plans: plansScreen
+} as const;
 
 // reveal-on-scroll hook
 function useReveal<T extends HTMLElement>() {
@@ -127,7 +186,7 @@ function hero(name: string, left: string, top: string, rot: number, dx: number, 
     show
   };
 }
-const HERO_STICKERS: HeroStickerCfg[] = [hero('Ritual', '4%', '15%', -8, -170, -70, -22, 0), hero('Self Reward', '1%', '47%', 6, -195, 5, 18, 0.6), hero('Necessity', '5%', '82%', -6, -155, 140, -16, 0.3), hero('Self Care', '23%', '5%', 5, -55, -185, 20, 0.9, 'hidden sm:block'), hero('Gift', '49%', '3%', -4, 0, -195, -18, 1.1, 'hidden md:block'), hero('Impulse Buy', '85%', '9%', 7, 185, -85, 24, 0.2), hero('Convenience', '92%', '39%', -6, 205, 0, -20, 0.7, 'hidden sm:block'), hero('Celebration', '89%', '64%', 4, 190, 95, 16, 0.45), hero('Comfort', '73%', '91%', -5, 110, 165, -22, 0.5, 'hidden sm:block'), hero('Aesthetic', '43%', '93%', 3, 0, 185, 14, 0.15), hero('Social', '21%', '89%', -3, -95, 160, -18, 0.8, 'hidden md:block'), hero('Hobby', '63%', '87%', 6, 75, 160, 20, 1, 'hidden lg:block')];
+const HERO_STICKERS: HeroStickerCfg[] = [hero('Ritual', '4%', '15%', -8, -170, -70, -22, 0, 'hidden sm:block'), hero('Self Reward', '1%', '47%', 6, -195, 5, 18, 0.6), hero('Necessity', '5%', '82%', -6, -155, 140, -16, 0.3), hero('Self Care', '23%', '5%', 5, -55, -185, 20, 0.9, 'hidden sm:block'), hero('Gift', '49%', '3%', -4, 0, -195, -18, 1.1, 'hidden md:block'), hero('Impulse Buy', '85%', '9%', 7, 185, -85, 24, 0.2), hero('Convenience', '92%', '39%', -6, 205, 0, -20, 0.7, 'hidden sm:block'), hero('Celebration', '89%', '64%', 4, 190, 95, 16, 0.45), hero('Comfort', '73%', '91%', -5, 110, 165, -22, 0.5, 'hidden sm:block'), hero('Aesthetic', '43%', '93%', 3, 0, 185, 14, 0.15), hero('Social', '21%', '89%', -3, -95, 160, -18, 0.8, 'hidden md:block'), hero('Hobby', '63%', '87%', 6, 75, 160, 20, 1, 'hidden lg:block')];
 function useHeroScroll(ref: React.RefObject<HTMLDivElement | null>) {
   const [progress, setProgress] = useState(0);
   useEffect(() => {
@@ -177,409 +236,11 @@ function HeroStickers() {
         opacity: 1 - p * 0.92,
         willChange: 'transform, opacity'
       }}>
-            <span className="ff-display inline-flex select-none items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-extrabold sticker sm:text-sm" style={{
-          background: s.bg,
-          color: s.fg
-        }}>
-              <span aria-hidden="true">{s.emoji}</span>
-              {s.label}
-            </span>
+            <img src={STICKER_SRC[s.label]} alt="" draggable={false} loading="lazy" decoding="async" className="h-auto w-20 select-none sm:w-24 lg:w-28" style={{
+          filter: 'drop-shadow(0 12px 18px rgba(55,0,75,0.28))'
+        }} />
           </div>
         </div>)}
-    </div>;
-}
-
-// ---------------------------------------------------------------------------
-// Interactive: rate a transaction "worth it / not worth it"
-// ---------------------------------------------------------------------------
-interface Txn {
-  emoji: string;
-  merchant: string;
-  category: string;
-  amount: string;
-  tag: string;
-}
-const SAMPLE_TXNS: Txn[] = [{
-  emoji: '☕️',
-  merchant: 'Blue Bottle Coffee',
-  category: 'Coffee, Boba & Small Treats',
-  amount: '$6.50',
-  tag: 'Ritual'
-}, {
-  emoji: '🛒',
-  merchant: 'Amazon',
-  category: 'Shopping',
-  amount: '$84.20',
-  tag: 'Impulse Buy'
-}, {
-  emoji: '🍜',
-  merchant: 'Late-night delivery',
-  category: 'Food Delivery',
-  amount: '$28.90',
-  tag: 'Comfort'
-}, {
-  emoji: '🚗',
-  merchant: 'Uber',
-  category: 'Rideshare',
-  amount: '$19.40',
-  tag: 'Convenience'
-}, {
-  emoji: '🎟️',
-  merchant: 'Concert tickets',
-  category: 'Experience',
-  amount: '$120.00',
-  tag: 'Celebration'
-}];
-function WorthItDemo() {
-  const [index, setIndex] = useState(0);
-  const [worthIt, setWorthIt] = useState(0);
-  const [notWorthIt, setNotWorthIt] = useState(0);
-  const [verdict, setVerdict] = useState<'worth' | 'not' | null>(null);
-  const txn = SAMPLE_TXNS[index];
-  function rate(v: 'worth' | 'not') {
-    setVerdict(v);
-    if (v === 'worth') setWorthIt(n => n + 1);else setNotWorthIt(n => n + 1);
-    window.setTimeout(() => {
-      setVerdict(null);
-      setIndex(i => (i + 1) % SAMPLE_TXNS.length);
-    }, 650);
-  }
-  return <div className="relative w-full max-w-sm rounded-[28px] p-5 sticker" style={{
-    background: '#fff',
-    border: `2px solid ${PURPLE}14`
-  }}>
-      
-      <div className="mb-3 flex items-center justify-between">
-        <span className="ff-display text-xs font-extrabold uppercase tracking-widest" style={{
-        color: `${PURPLE}99`
-      }}>
-          Last 30 days
-        </span>
-        <span className="ff-hand text-xl" style={{
-        color: RED
-      }}>
-          tap one →
-        </span>
-      </div>
-
-      <div className="flex items-center gap-3 rounded-2xl p-3 transition-all duration-300" style={{
-      background: verdict === 'worth' ? `${GREEN}1f` : verdict === 'not' ? `${RED}1f` : CREAM,
-      transform: verdict ? 'scale(0.98)' : 'scale(1)'
-    }}>
-        
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-2xl" style={{
-        background: '#fff'
-      }}>
-          
-          {txn.emoji}
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="ff-display truncate text-base font-bold" style={{
-          color: PURPLE
-        }}>
-            {txn.merchant}
-          </p>
-          <p className="truncate text-xs" style={{
-          color: `${PURPLE}99`
-        }}>
-            {txn.category}
-          </p>
-        </div>
-        <span className="ff-display text-base font-extrabold" style={{
-        color: PURPLE
-      }}>
-          {txn.amount}
-        </span>
-      </div>
-
-      <div className="mt-3 flex items-center gap-2">
-        <span className="rounded-full px-2.5 py-1 text-xs font-semibold" style={{
-        background: `${PURPLE}0d`,
-        color: PURPLE
-      }}>
-          
-          #{txn.tag}
-        </span>
-        <span className="ff-hand text-base" style={{
-        color: `${PURPLE}cc`
-      }}>
-          was it worth it?
-        </span>
-      </div>
-
-      <div className="mt-4 grid grid-cols-2 gap-3">
-        <button onClick={() => rate('worth')} className="ff-display rounded-2xl py-3 text-base font-extrabold transition-transform active:scale-95" style={{
-        background: GREEN,
-        color: '#06351E',
-        boxShadow: `0 8px 0 -2px ${GREEN}66`
-      }}>
-          
-          worth it
-        </button>
-        <button onClick={() => rate('not')} className="ff-display rounded-2xl py-3 text-base font-extrabold transition-transform active:scale-95" style={{
-        background: RED,
-        color: '#4a0014',
-        boxShadow: `0 8px 0 -2px ${RED}66`
-      }}>
-          
-          not worth it
-        </button>
-      </div>
-
-      <div className="mt-4 flex items-center justify-between text-xs" style={{
-      color: `${PURPLE}99`
-    }}>
-        <span className="font-semibold" style={{
-        color: '#1d7a4a'
-      }}>
-          ● {worthIt} worth it
-        </span>
-        <span className="font-semibold" style={{
-        color: '#b3173f'
-      }}>
-          {notWorthIt} not worth it ●
-        </span>
-      </div>
-    </div>;
-}
-
-// ---------------------------------------------------------------------------
-// Taste profile — what Peek learns from your worth-it taps (uses app tags)
-// ---------------------------------------------------------------------------
-function TasteCard() {
-  const rows = [{
-    tag: 'Ritual',
-    worth: 82,
-    note: 'your morning coffee earns its keep ☕️'
-  }, {
-    tag: 'Comfort',
-    worth: 54,
-    note: 'worth it on hard days, not on autopilot'
-  }, {
-    tag: 'Impulse Buy',
-    worth: 18,
-    note: 'rarely worth it the next morning'
-  }];
-  return <div className="w-full max-w-sm rounded-[28px] p-6 sticker" style={{
-    background: '#fff',
-    border: `2px solid ${PURPLE}14`
-  }}>
-      <div className="flex items-center justify-between">
-        <span className="ff-display text-sm font-extrabold uppercase tracking-widest" style={{
-        color: PURPLE
-      }}>
-          What Peek learned
-        </span>
-        <span className="rounded-full px-2.5 py-1 text-xs font-bold" style={{
-        background: CREAM,
-        color: PURPLE
-      }}>
-          after 30 taps
-        </span>
-      </div>
-
-      <div className="mt-5 space-y-4">
-        {rows.map(r => <div key={r.tag}>
-            <div className="flex items-center justify-between text-sm font-semibold" style={{
-          color: PURPLE
-        }}>
-              <span>#{r.tag}</span>
-              <span style={{
-            color: r.worth >= 50 ? '#1d7a4a' : '#b3173f'
-          }}>
-                {r.worth}% worth it
-              </span>
-            </div>
-            <div className="mt-1.5 flex h-2.5 w-full overflow-hidden rounded-full" style={{
-          background: `${RED}26`
-        }}>
-              <div className="h-full rounded-full transition-all duration-700" style={{
-            width: `${r.worth}%`,
-            background: GREEN
-          }} />
-            </div>
-            <p className="ff-hand mt-1 text-base" style={{
-          color: `${PURPLE}cc`
-        }}>
-              {r.note}
-            </p>
-          </div>)}
-      </div>
-
-      <p className="ff-hand mt-5 text-lg" style={{
-      color: ORANGE_CTA
-    }}>
-        30 taps become a taste profile, not a budget lecture.
-      </p>
-    </div>;
-}
-
-// ---------------------------------------------------------------------------
-// Interactive: tap-to-reveal spending personality (Wrapped style)
-// ---------------------------------------------------------------------------
-function StoryCard() {
-  const [revealed, setRevealed] = useState(false);
-  return <button onClick={() => setRevealed(r => !r)} className="group relative w-full max-w-sm overflow-hidden rounded-[28px] p-6 text-left transition-transform duration-300 hover:-translate-y-1" style={{
-    background: `linear-gradient(160deg, ${PURPLE} 0%, #5A0A6E 60%, ${RED} 130%)`,
-    boxShadow: '0 26px 50px -20px rgba(55,0,75,0.6)',
-    minHeight: 380
-  }}>
-      
-      <div className="flex items-center justify-between">
-        <span className="ff-display text-xs font-extrabold uppercase tracking-[0.2em]" style={{
-        color: '#ffffffcc'
-      }}>
-          Your 2026 so far
-        </span>
-        <span className="text-lg">✨</span>
-      </div>
-
-      <p className="ff-hand mt-6 text-2xl" style={{
-      color: CREAM
-    }}>
-        your spending personality is…
-      </p>
-
-      <div className="relative mt-2 h-[110px]">
-        <h3 className={`ff-display absolute text-[42px] font-extrabold leading-none transition-all duration-500 ${revealed ? 'opacity-0 -translate-y-3' : 'opacity-100'}`} style={{
-        color: '#fff'
-      }}>
-          
-          tap to <br /> reveal 👀
-        </h3>
-        <h3 className={`ff-display absolute text-[40px] font-extrabold leading-[0.95] transition-all duration-500 ${revealed ? 'opacity-100' : 'opacity-0 translate-y-3'}`} style={{
-        color: CREAM
-      }}>
-          
-          The Comfort <br /> Seeker
-        </h3>
-      </div>
-
-      <div className={`mt-4 space-y-2 transition-all duration-500 ${revealed ? 'opacity-100' : 'opacity-0'}`}>
-        
-        <Row label="Comfort buys" value="$312" pct={68} />
-        <Row label="Ritual coffee" value="$96" pct={40} />
-        <Row label="Late-night delivery" value="$140" pct={55} />
-      </div>
-
-      <p className={`ff-hand mt-4 text-xl transition-opacity duration-500 ${revealed ? 'opacity-100' : 'opacity-0'}`} style={{
-      color: '#fff'
-    }}>
-        
-        you spend most when you're winding down 🌙
-      </p>
-    </button>;
-}
-function Row({
-  label,
-  value,
-  pct
-}: {
-  label: string;
-  value: string;
-  pct: number;
-}) {
-  return <div>
-      <div className="flex items-center justify-between text-sm font-semibold" style={{
-      color: '#fff'
-    }}>
-        <span>{label}</span>
-        <span>{value}</span>
-      </div>
-      <div className="mt-1 h-2 w-full overflow-hidden rounded-full" style={{
-      background: '#ffffff2e'
-    }}>
-        <div className="h-full rounded-full" style={{
-        width: `${pct}%`,
-        background: CREAM
-      }} />
-      </div>
-    </div>;
-}
-
-// ---------------------------------------------------------------------------
-// Smart plan card with mid-month check-in
-// ---------------------------------------------------------------------------
-function PlanCard() {
-  const caps = [{
-    label: 'Self Reward',
-    spent: 86,
-    cap: 150,
-    color: '#FE875C'
-  }, {
-    label: 'Eating Out',
-    spent: 132,
-    cap: 200,
-    color: GREEN
-  }, {
-    label: 'Subscriptions',
-    spent: 64,
-    cap: 60,
-    color: RED
-  }];
-  return <div className="w-full max-w-sm rounded-[28px] p-6 sticker" style={{
-    background: '#fff',
-    border: `2px solid ${PURPLE}14`
-  }}>
-      
-      <div className="flex items-center justify-between">
-        <span className="ff-display text-sm font-extrabold uppercase tracking-widest" style={{
-        color: PURPLE
-      }}>
-          Monthly caps
-        </span>
-        <span className="rounded-full px-2.5 py-1 text-xs font-bold" style={{
-        background: CREAM,
-        color: PURPLE
-      }}>
-          Apr 8 – Apr 30
-        </span>
-      </div>
-
-      <div className="mt-5 space-y-4">
-        {caps.map(c => {
-        const over = c.spent > c.cap;
-        const pct = Math.min(100, Math.round(c.spent / c.cap * 100));
-        return <div key={c.label}>
-              <div className="flex items-center justify-between text-sm font-semibold" style={{
-            color: PURPLE
-          }}>
-                <span>{c.label}</span>
-                <span style={{
-              color: over ? RED : `${PURPLE}cc`
-            }}>
-                  ${c.spent} <span style={{
-                color: `${PURPLE}99`
-              }}>/ ${c.cap}</span>
-                </span>
-              </div>
-              <div className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full" style={{
-            background: `${PURPLE}12`
-          }}>
-                <div className="h-full rounded-full transition-all duration-700" style={{
-              width: `${pct}%`,
-              background: over ? RED : c.color
-            }} />
-                
-              </div>
-            </div>;
-      })}
-      </div>
-
-      <div className="mt-5 rounded-2xl p-3" style={{
-      background: CREAM
-    }}>
-        <p className="ff-hand text-lg" style={{
-        color: PURPLE
-      }}>
-          mid-month check-in 👋
-        </p>
-        <p className="text-sm" style={{
-        color: `${PURPLE}cc`
-      }}>
-          You're a little over on subscriptions. Want to pause one before the cycle ends?
-        </p>
-      </div>
     </div>;
 }
 
@@ -627,10 +288,31 @@ function AppStoreButton({
 }
 
 // ---------------------------------------------------------------------------
+// AppScreen — a real Peek app screenshot (transparent phone mockup), shown as
+// a softly-shadowed, lightly-tilted "sticker" so it sits in the scrapbook look.
+// ---------------------------------------------------------------------------
+function AppScreen({
+  src,
+  alt,
+  rotate = 0,
+  className = ''
+}: {
+  src: string;
+  alt: string;
+  rotate?: number;
+  className?: string;
+}) {
+  return <img src={src} alt={alt} loading="lazy" decoding="async" width={685} height={1400} draggable={false} className={`h-auto w-full select-none ${className}`} style={{
+    transform: `rotate(${rotate}deg)`,
+    filter: 'drop-shadow(0 28px 44px rgba(55,0,75,0.30))'
+  }} />;
+}
+
+// ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
 export const PeekLandingPage = () => {
-  const personalities = ['The Comfort Seeker', 'The Jetsetter', 'The Convenience Vendor', 'The Ritualist', 'The Treat-Yourself-er', 'The Late-Night Browser'];
+  const personalities = ['The Comfort Seeker', 'The Jetsetter', 'The Convenience Regular', 'The Ritualist', 'The Treat-Yourself-er', 'The Late-Night Browser'];
   return <div className="ff-body min-h-screen w-full" style={{
     background: CREAM,
     color: PURPLE
@@ -653,10 +335,10 @@ export const PeekLandingPage = () => {
           <nav className="hidden items-center gap-7 text-sm font-semibold md:flex" style={{
           color: `${PURPLE}cc`
         }}>
-            <a href="#problem" className="transition-opacity hover:opacity-60">The problem</a>
+            <a href="#problem" className="transition-opacity hover:opacity-60">Why budgets miss</a>
             <a href="#how" className="transition-opacity hover:opacity-60">How it works</a>
-            <a href="#worthit" className="transition-opacity hover:opacity-60">Worth it</a>
-            <a href="#stories" className="transition-opacity hover:opacity-60">Stories</a>
+            <a href="#worthit" className="transition-opacity hover:opacity-60">Worth it?</a>
+            <a href="#stories" className="transition-opacity hover:opacity-60">Spending stories</a>
           </nav>
           <a href="#download" className="ff-display rounded-full px-5 py-2 text-sm font-extrabold transition-transform hover:scale-105" style={{
           background: PURPLE,
@@ -680,24 +362,24 @@ export const PeekLandingPage = () => {
             color: RED,
             transform: 'rotate(-3deg)'
           }}>
-              see yourself clearly →
+              less guilt →
             </span>
             <h1 className="ff-display mt-3 text-[clamp(2.6rem,7vw,3.75rem)] font-extrabold leading-[0.98] text-balance" style={{
             color: PURPLE
           }}>
-              Your bank sees transactions.{' '}
+              Your bank sees charges.{' '}
               <span style={{
               color: ORANGE_CTA
-            }}>Peek sees you.</span>
+            }}>Peek shows the why.</span>
             </h1>
             <p className="mt-5 max-w-md text-lg" style={{
             color: `${PURPLE}cc`
           }}>
-              Discover the reasons behind your spending: not just where the money went, but whether
-              it was worth it.
+              Rate each purchase worth it or not. Peek turns those tiny answers into spending
+              stories and gentler plans.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-4">
-              <AppStoreButton size="lg" label="Get Peek, it's free" />
+              <AppStoreButton size="lg" label="Get Peek free" />
               <span className="ff-hand text-xl" style={{
               color: `${PURPLE}cc`
             }}>
@@ -710,11 +392,8 @@ export const PeekLandingPage = () => {
             <div className="absolute h-72 w-72 rounded-full blur-3xl" style={{
             background: `${GREEN}33`
           }} />
-            
-            <div className="relative flex flex-col items-center gap-5">
-              <PeekMascot size={150} className="anim-bob" expression="happy" />
-              <WorthItDemo />
-            </div>
+            <PeekMascot size={92} className="anim-bob absolute -top-4 right-4 z-20 sm:right-0" expression="happy" />
+            <AppScreen src={SCREENS.worthit} alt="The Peek app: tag each purchase by what drove it, like routine, convenience, or a treat, and watch your worth-it patterns appear" rotate={-2.5} className="relative z-10 mx-auto max-w-[280px] sm:max-w-[300px]" />
           </div>
         </div>
       </section>
@@ -725,15 +404,15 @@ export const PeekLandingPage = () => {
           <div className="space-y-5">
             {[{
             icon: '🧮',
-            text: 'Every money app does the same thing: it sorts your transactions into categories, shows you a dashboard, and tells you to spend less on food.',
+            text: 'Most money apps sort transactions, show charts, and tell you to cut food.',
             rot: -1.4
           }, {
             icon: '🍕',
-            text: "But maybe food is the thing you value most. The real waste is usually somewhere you haven't looked: small, forgettable purchases that don't match who you actually are.",
+            text: 'But food might be worth it. The waste is often smaller: forgettable purchases you would not choose twice.',
             rot: 1.2
           }, {
             icon: '🕳️',
-            text: 'The problem was never information. The real gap is between what you intend to do and what you actually do, and no spreadsheet has ever closed it.',
+            text: 'More data does not fix the gap between your plan and your week. Peek starts with the question budgets skip.',
             rot: -0.8
           }].map((c, i) => <Reveal key={i} delay={i * 90}>
                 <div className="flex max-w-[520px] gap-4 rounded-[26px] bg-white p-6 sticker transition-transform hover:-translate-y-1" style={{
@@ -759,12 +438,12 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display ml-auto max-w-md text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: PURPLE
             }}>
-                Budgeting apps think the problem is math.
+                Budgets make it about math.
               </h2>
               <p className="ff-hand ml-auto mt-6 max-w-sm text-2xl text-pretty" style={{
               color: RED
             }}>
-                You already know you shouldn't blow $400 on random Amazon orders.
+                The harder part is knowing what you still feel good about.
               </p>
             </div>
           </Reveal>
@@ -781,7 +460,7 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display mx-auto max-w-3xl text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: CREAM
             }}>
-                Peek learns who you are before it says a word.
+                Peek asks first, then helps.
               </h2>
             </div>
           </Reveal>
@@ -789,18 +468,18 @@ export const PeekLandingPage = () => {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[{
             n: '1',
-            title: 'Rate your spending: worth it or not.',
-            body: "Every transaction gets one simple question. No judgment, no categories designed for accountants. Just: was this worth it to you? Over time, this builds a picture of what you actually care about.",
+            title: 'Tap worth it or not.',
+            body: 'One question per transaction. No accountant categories. Your answers show what you value, regret, and repeat.',
             accent: GREEN
           }, {
             n: '2',
-            title: 'See your story, not a spreadsheet.',
-            body: "Your spending shows up as personal recaps, like Spotify Wrapped for your money. You'll see patterns you'd never catch in a bank statement.",
+            title: 'Get stories you can read.',
+            body: 'Peek turns patterns into recaps: the comforts, rituals, impulse buys, and days your spending changed.',
             accent: '#FE875C'
           }, {
             n: '3',
-            title: 'Plan for who you actually are.',
-            body: 'Peek suggests realistic numbers based on your actual spending and your own evaluation of it. The path forward is obvious, without anyone lecturing you.',
+            title: 'Set plans that fit real life.',
+            body: 'Caps come from what you spent and how you felt about it, with mid-month nudges before things drift.',
             accent: '#FFE92B'
           }].map((s, i) => <Reveal key={i} delay={i * 90}>
                 <div className="h-full rounded-[26px] p-6" style={{
@@ -839,7 +518,7 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: PURPLE
             }}>
-                One question that changes everything.
+                A tiny question, asked often.
               </h2>
               <p className="ff-hand mt-4 text-2xl" style={{
               color: RED
@@ -849,20 +528,19 @@ export const PeekLandingPage = () => {
               <p className="mt-4 max-w-md text-lg" style={{
               color: `${PURPLE}cc`
             }}>
-                No five-star ratings. No complicated categories. Just a simple, honest check-in with
-                each transaction that teaches Peek who you are: what you value, what you regret,
-                what you'd do again.
+                Forget five-star ratings and budget categories. One honest tap shows which purchases
+                feel good later, which fade fast, and what you would do again.
               </p>
               <p className="mt-4 max-w-md text-lg font-semibold" style={{
               color: PURPLE
             }}>
-                The result: an app that actually understands you before it tries to help.
+                The result: guidance grounded in your own taste, not a generic budget rule.
               </p>
             </div>
           </Reveal>
           <Reveal delay={100}>
             <div className="flex justify-center">
-              <TasteCard />
+              <AppScreen src={SCREENS.blindbox} alt="Peek turns your worth-it answers into a collectible insight, a blind box that unlocks at the end of each cycle" rotate={2.5} className="max-w-[280px] sm:max-w-[300px]" />
             </div>
           </Reveal>
         </div>
@@ -876,7 +554,7 @@ export const PeekLandingPage = () => {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <Reveal>
               <div className="order-2 flex justify-center lg:order-1">
-                <StoryCard />
+                <AppScreen src={SCREENS.stories} alt="Peek's spending story: weekday you vs weekend you, told back to you instead of buried in a dashboard" rotate={-2.5} className="max-w-[280px] sm:max-w-[300px]" />
               </div>
             </Reveal>
             <Reveal delay={100}>
@@ -884,19 +562,19 @@ export const PeekLandingPage = () => {
                 <h2 className="ff-display text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
                 color: PURPLE
               }}>
-                  Your spending, told back to you.
+                  Your spending, told back plainly.
                 </h2>
                 <p className="mt-4 max-w-md text-lg" style={{
                 color: `${PURPLE}cc`
               }}>
-                  Dashboards are cold. Numbers without context create anxiety. So Peek replaces them
-                  with personal spending stories: visual, narrative, easy to read.
+                  Dashboards can make money feel colder than it is. Peek turns transactions into
+                  short visual recaps you can skim without spiraling.
                 </p>
                 <p className="mt-4 max-w-md text-lg" style={{
                 color: `${PURPLE}cc`
               }}>
-                  Find out if you're a comfort seeker, a jetsetter, or a convenience vendor. A reality
-                  check that feels less like a lecture and more like a friend holding up a mirror.
+                  You might be a Comfort Seeker, a Ritualist, or a Late-Night Browser. The point is
+                  not the label. It is a clearer read on when and why you spend.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {personalities.map((p, i) => <span key={p} className="rounded-full px-3 py-1.5 text-sm font-semibold sticker" style={{
@@ -922,30 +600,30 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: PURPLE
             }}>
-                A budget that knows you'll be human.
+                A budget that leaves room for you.
               </h2>
               <p className="mt-4 max-w-md text-lg" style={{
               color: `${PURPLE}cc`
             }}>
-                Traditional budgeting asks you to predict the future from scratch. Most people have
-                no idea, so they guess high, feel guilty, or just skip the whole thing.
+                Traditional budgets ask you to guess a perfect month. Then real life shows up, and
+                the plan gets ignored.
               </p>
               <p className="mt-4 max-w-md text-lg" style={{
               color: `${PURPLE}cc`
             }}>
-                Peek builds plans from what's real: your actual spending, combined with your own sense
-                of what was and wasn't worth it. Then it checks in mid-month.
+                Peek starts from your recent spending and your worth-it ratings. It suggests caps,
+                then checks in before the month gets away from you.
               </p>
               <p className="ff-hand mt-4 text-2xl" style={{
               color: RED
             }}>
-                no set-it-and-forget-it. no shame spiral.
+                gentle nudge. no guilt spiral.
               </p>
             </div>
           </Reveal>
           <Reveal delay={100}>
             <div className="flex justify-center">
-              <PlanCard />
+              <AppScreen src={SCREENS.plans} alt="Peek's monthly caps: built around what you already value, so the spending that feels good stays guilt-free" rotate={2.5} className="max-w-[280px] sm:max-w-[300px]" />
             </div>
           </Reveal>
         </div>
@@ -960,19 +638,18 @@ export const PeekLandingPage = () => {
             <h2 className="ff-display mx-auto max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl" style={{
             color: CREAM
           }}>
-              We never tell you who you are without your permission.
+              Peek asks before it explains.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg" style={{
             color: '#ffffffcc'
           }}>
-              Peek doesn't assume. It asks. We give you a structured surface to think on: your
-              transactions, your patterns, your annotations. You decide what's worth it. You build
-              the story.
+              Your ratings are the source of truth. Peek uses them to group transactions, name
+              patterns, and show what changed. You decide what was worth it.
             </p>
             <p className="ff-hand mx-auto mt-5 text-2xl" style={{
             color: GREEN
           }}>
-              we just make sure you can look at your numbers without flinching.
+              numbers you can look at without bracing.
             </p>
           </Reveal>
         </div>
@@ -989,38 +666,30 @@ export const PeekLandingPage = () => {
             <h2 className="ff-display mx-auto max-w-2xl text-5xl font-extrabold leading-[1.02] text-balance sm:text-6xl" style={{
             color: CREAM
           }}>
-              See what your spending says about you.
+              Find the spending you still feel good about.
             </h2>
             <div className="mt-9 flex flex-col items-center gap-3">
               <AppStoreButton size="lg" variant="orange" label="Download Peek" />
               <span className="ff-hand text-2xl" style={{
               color: '#ffffffcc'
             }}>
-                free · iPhone · no spreadsheets, promise
+                free · iPhone · no spreadsheets
               </span>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* worth-it marquee */}
-      <div className="overflow-hidden border-t py-5" style={{
+      {/* worth-it sticker marquee — real die-cut category stickers */}
+      <div className="overflow-hidden border-t py-7" style={{
       background: PURPLE,
       borderColor: '#ffffff1a'
     }}>
-        <div className="marquee-track flex w-max gap-4 whitespace-nowrap">
-          {[...Array(2)].map((_, dup) => <div key={dup} className="flex gap-4">
-              {CATEGORY_STICKERS.map((c, i) => {
-            // purple pills vanish on the purple marquee — show them as cream there
-            const onPurple = c.bg.toUpperCase() === PURPLE;
-            return <span key={`${dup}-${i}`} className="ff-display inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-extrabold" style={{
-              background: onPurple ? CREAM : c.bg,
-              color: onPurple ? PURPLE : c.fg
-            }}>
-                  <span aria-hidden="true">{c.emoji}</span>
-                  {c.label}
-                </span>;
-          })}
+        <div className="marquee-track flex w-max items-center gap-7 whitespace-nowrap">
+          {[...Array(2)].map((_, dup) => <div key={dup} className="flex items-center gap-7">
+              {CATEGORY_STICKERS.map((c, i) => <img key={`${dup}-${i}`} src={STICKER_SRC[c.label]} alt={c.label} draggable={false} loading="lazy" decoding="async" className="h-16 w-auto select-none sm:h-20" style={{
+            filter: 'drop-shadow(0 8px 12px rgba(0,0,0,0.3))'
+          }} />)}
             </div>)}
         </div>
       </div>
@@ -1048,7 +717,7 @@ export const PeekLandingPage = () => {
         <p className="mt-6 text-center text-sm sm:text-left" style={{
         color: `${PURPLE}99`
       }}>
-          Your money. Your patterns. Your call. · © 2026 Peek
+          Your spending. Your story. Your call. · © 2026 Peek
         </p>
       </footer>
     </div>;
