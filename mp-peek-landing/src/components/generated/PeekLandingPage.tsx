@@ -251,7 +251,8 @@ function HeroStickers() {
 // ---------------------------------------------------------------------------
 // App Store download badge (real CTA, Apple-style)
 // ---------------------------------------------------------------------------
-const APP_STORE_URL = 'https://apps.apple.com/app/peek';
+const APP_STORE_URL =
+  'https://apps.apple.com/us/app/peek-ai-personal-finance-app/id6742875016';
 function AppleGlyph({
   size = 22,
   color = 'currentColor'
@@ -316,7 +317,7 @@ function AppScreen({
 // Page
 // ---------------------------------------------------------------------------
 export const PeekLandingPage = () => {
-  const personalities = ['The Comfort Seeker', 'The Jetsetter', 'The Convenience Regular', 'The Ritualist', 'The Treat-Yourself-er', 'The Late-Night Browser'];
+  const personalities = ['The Comfort Seeker', 'The Jetsetter', 'The Convenience Vendor', 'The Ritualist', 'The Treat-Yourself-er', 'The Late-Night Browser'];
   return <div className="ff-body min-h-screen w-full" style={{
     background: CREAM,
     color: PURPLE
@@ -339,10 +340,10 @@ export const PeekLandingPage = () => {
           <nav className="hidden items-center gap-7 text-sm font-semibold md:flex" style={{
           color: `${PURPLE}cc`
         }}>
-            <a href="#problem" className="transition-opacity hover:opacity-60">Why budgets miss</a>
+            <a href="#problem" className="transition-opacity hover:opacity-60">The problem</a>
             <a href="#how" className="transition-opacity hover:opacity-60">How it works</a>
-            <a href="#worthit" className="transition-opacity hover:opacity-60">Worth it?</a>
-            <a href="#stories" className="transition-opacity hover:opacity-60">Spending stories</a>
+            <a href="#worthit" className="transition-opacity hover:opacity-60">Worth it</a>
+            <a href="#stories" className="transition-opacity hover:opacity-60">Stories</a>
           </nav>
           <a href="#download" className="ff-display rounded-full px-5 py-2 text-sm font-extrabold transition-transform hover:scale-105" style={{
           background: PURPLE,
@@ -368,7 +369,7 @@ export const PeekLandingPage = () => {
             color: RED,
             transform: 'rotate(-3deg)'
           }}>
-              less guilt →
+              see yourself clearly →
             </span>
             <h1 className="ff-display mt-3 text-[clamp(2.6rem,7vw,3.75rem)] font-extrabold leading-[0.98] text-balance" style={{
             color: PURPLE
@@ -381,11 +382,11 @@ export const PeekLandingPage = () => {
             <p className="mt-5 max-w-md text-lg" style={{
             color: `${PURPLE}cc`
           }}>
-              Rate each purchase worth it or not. Peek turns those tiny answers into spending
-              stories and gentler plans.
+              Discover the reasons behind your spending: not just where the money went, but whether
+              it was worth it.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-4">
-              <AppStoreButton size="lg" label="Get Peek free" />
+              <AppStoreButton size="lg" label="Get Peek, it's free" />
               <span className="ff-hand text-xl" style={{
               color: `${PURPLE}cc`
             }}>
@@ -410,15 +411,15 @@ export const PeekLandingPage = () => {
           <div className="space-y-5">
             {[{
             icon: '🧮',
-            text: 'Most money apps sort transactions, show charts, and tell you to cut food.',
+            text: 'Every money app does the same thing: it sorts your transactions into categories, shows you a dashboard, and tells you to spend less on food.',
             rot: -1.4
           }, {
             icon: '🍕',
-            text: 'But food might be worth it. The waste is often smaller: forgettable purchases you would not choose twice.',
+            text: "But maybe food is the thing you value most. The real waste is usually somewhere you haven't looked: small, forgettable purchases that don't match who you actually are.",
             rot: 1.2
           }, {
             icon: '🕳️',
-            text: 'More data does not fix the gap between your plan and your week. Peek starts with the question budgets skip.',
+            text: 'The problem was never information. The real gap is between what you intend to do and what you actually do, and no spreadsheet has ever closed it.',
             rot: -0.8
           }].map((c, i) => <Reveal key={i} delay={i * 90}>
                 <div className="flex max-w-[520px] gap-4 rounded-[26px] bg-white p-6 sticker transition-transform hover:-translate-y-1" style={{
@@ -449,7 +450,7 @@ export const PeekLandingPage = () => {
               <p className="ff-hand ml-auto mt-6 max-w-sm text-2xl text-pretty" style={{
               color: RED
             }}>
-                The harder part is knowing what you still feel good about.
+                You already know you shouldn't blow $400 on random Amazon orders.
               </p>
             </div>
           </Reveal>
@@ -466,7 +467,7 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display mx-auto max-w-3xl text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: CREAM
             }}>
-                Peek asks first, then helps.
+                Peek learns who you are before it says a word.
               </h2>
             </div>
           </Reveal>
@@ -474,18 +475,18 @@ export const PeekLandingPage = () => {
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[{
             n: '1',
-            title: 'Tap worth it or not.',
-            body: 'One question per transaction. No accountant categories. Your answers show what you value, regret, and repeat.',
+            title: 'Rate your spending: worth it or not.',
+            body: 'Every transaction gets one simple question. No judgment, no categories designed for accountants. Just: was this worth it to you? Over time, this builds a picture of what you actually care about.',
             accent: GREEN
           }, {
             n: '2',
-            title: 'Get stories you can read.',
-            body: 'Peek turns patterns into recaps: the comforts, rituals, impulse buys, and days your spending changed.',
+            title: 'See your story, not a spreadsheet.',
+            body: "Your spending shows up as personal recaps, like Spotify Wrapped for your money. You'll see patterns you'd never catch in a bank statement.",
             accent: '#FE875C'
           }, {
             n: '3',
-            title: 'Set plans that fit real life.',
-            body: 'Caps come from what you spent and how you felt about it, with mid-month nudges before things drift.',
+            title: 'Plan for who you actually are.',
+            body: 'Peek suggests realistic numbers based on your actual spending and your own evaluation of it. The path forward is obvious, without anyone lecturing you.',
             accent: '#FFE92B'
           }].map((s, i) => <Reveal key={i} delay={i * 90}>
                 <div className="h-full rounded-[26px] p-6" style={{
@@ -524,7 +525,7 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: PURPLE
             }}>
-                A tiny question, asked often.
+                One question that changes everything.
               </h2>
               <p className="ff-hand mt-4 text-2xl" style={{
               color: RED
@@ -534,13 +535,14 @@ export const PeekLandingPage = () => {
               <p className="mt-4 max-w-md text-lg" style={{
               color: `${PURPLE}cc`
             }}>
-                Forget five-star ratings and budget categories. One honest tap shows which purchases
-                feel good later, which fade fast, and what you would do again.
+                No five-star ratings. No complicated categories. Just a simple, honest check-in with
+                each transaction that teaches Peek who you are: what you value, what you regret, what
+                you'd do again.
               </p>
               <p className="mt-4 max-w-md text-lg font-semibold" style={{
               color: PURPLE
             }}>
-                The result: guidance grounded in your own taste, not a generic budget rule.
+                The result: an app that actually understands you before it tries to help.
               </p>
             </div>
           </Reveal>
@@ -568,19 +570,19 @@ export const PeekLandingPage = () => {
                 <h2 className="ff-display text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
                 color: PURPLE
               }}>
-                  Your spending, told back plainly.
+                  Your spending, told back to you.
                 </h2>
                 <p className="mt-4 max-w-md text-lg" style={{
                 color: `${PURPLE}cc`
               }}>
-                  Dashboards can make money feel colder than it is. Peek turns transactions into
-                  short visual recaps you can skim without spiraling.
+                  Dashboards are cold. Numbers without context create anxiety. So Peek replaces them
+                  with personal spending stories: visual, narrative, easy to read.
                 </p>
                 <p className="mt-4 max-w-md text-lg" style={{
                 color: `${PURPLE}cc`
               }}>
-                  You might be a Comfort Seeker, a Ritualist, or a Late-Night Browser. The point is
-                  not the label. It is a clearer read on when and why you spend.
+                  Find out if you're a comfort seeker, a jetsetter, or a convenience vendor. A reality
+                  check that feels less like a lecture and more like a friend holding up a mirror.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {personalities.map((p, i) => <span key={p} className="rounded-full px-3 py-1.5 text-sm font-semibold sticker" style={{
@@ -606,24 +608,24 @@ export const PeekLandingPage = () => {
               <h2 className="ff-display text-4xl font-extrabold leading-tight text-balance sm:text-5xl" style={{
               color: PURPLE
             }}>
-                A budget that leaves room for you.
+                A budget that knows you'll be human.
               </h2>
               <p className="mt-4 max-w-md text-lg" style={{
               color: `${PURPLE}cc`
             }}>
-                Traditional budgets ask you to guess a perfect month. Then real life shows up, and
-                the plan gets ignored.
+                Traditional budgeting asks you to predict the future from scratch. Most people have no
+                idea, so they guess high, feel guilty, or just skip the whole thing.
               </p>
               <p className="mt-4 max-w-md text-lg" style={{
               color: `${PURPLE}cc`
             }}>
-                Peek starts from your recent spending and your worth-it ratings. It suggests caps,
-                then checks in before the month gets away from you.
+                Peek builds plans from what's real: your actual spending, combined with your own sense
+                of what was and wasn't worth it. Then it checks in mid-month.
               </p>
               <p className="ff-hand mt-4 text-2xl" style={{
               color: RED
             }}>
-                gentle nudge. no guilt spiral.
+                no set-it-and-forget-it. no shame spiral.
               </p>
             </div>
           </Reveal>
@@ -644,18 +646,19 @@ export const PeekLandingPage = () => {
             <h2 className="ff-display mx-auto max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl" style={{
             color: CREAM
           }}>
-              Peek asks before it explains.
+              We never tell you who you are without your permission.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg" style={{
             color: '#ffffffcc'
           }}>
-              Your ratings are the source of truth. Peek uses them to group transactions, name
-              patterns, and show what changed. You decide what was worth it.
+              Peek doesn't assume. It asks. We give you a structured surface to think on: your
+              transactions, your patterns, your annotations. You decide what's worth it. You build
+              the story.
             </p>
             <p className="ff-hand mx-auto mt-5 text-2xl" style={{
             color: GREEN
           }}>
-              numbers you can look at without bracing.
+              we just make sure you can look at your numbers without flinching.
             </p>
           </Reveal>
         </div>
@@ -672,14 +675,14 @@ export const PeekLandingPage = () => {
             <h2 className="ff-display mx-auto max-w-2xl text-5xl font-extrabold leading-[1.02] text-balance sm:text-6xl" style={{
             color: CREAM
           }}>
-              Find the spending you still feel good about.
+              See what your spending says about you.
             </h2>
             <div className="mt-9 flex flex-col items-center gap-3">
               <AppStoreButton size="lg" variant="orange" label="Download Peek" />
               <span className="ff-hand text-2xl" style={{
               color: '#ffffffcc'
             }}>
-                free · iPhone · no spreadsheets
+                free · iPhone · no spreadsheets, promise
               </span>
             </div>
           </Reveal>
@@ -723,7 +726,7 @@ export const PeekLandingPage = () => {
         <p className="mt-6 text-center text-sm sm:text-left" style={{
         color: `${PURPLE}99`
       }}>
-          Your spending. Your story. Your call. · © 2026 Peek
+          Your money. Your patterns. Your call. · © 2026 Peek
         </p>
       </footer>
     </div>;
