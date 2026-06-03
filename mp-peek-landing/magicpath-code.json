@@ -2,13 +2,17 @@
   "mode": "edit",
   "componentId": "412449284668157952",
   "projectId": "412449171589701632",
-  "selectedRevisionId": "412763788597669888",
-  "baseRevisionId": "412763788597669888",
-  "jobId": "384812403151491072-external-agent-412764764494766080",
+  "selectedRevisionId": "412774233677115392",
+  "baseRevisionId": "412774233677115392",
+  "jobId": "384812403151491072-external-agent-412774233677115393",
   "generatedName": "warm-year-6379",
   "name": "Peek Landing Page",
   "selectedImages": [],
   "editableFiles": [
+    {
+      "path": "assets/peek-logo.png",
+      "sha256": "5dc7dff1d2c328be6abf40c1028fd89b55531b1538623c3d8394c21249dba56f"
+    },
     {
       "path": "src/App.tsx",
       "sha256": "fec8a42cc05e10fa5666b8faec98b624d2f54ff93dfb6a085208cb0b46672da1"
@@ -19,7 +23,7 @@
     },
     {
       "path": "src/components/generated/PeekMascot.tsx",
-      "sha256": "c3699db40215680d3b7b3ab702850338eaf10862b588dec08cc937baa7c34b10"
+      "sha256": "b1c962ed49c874564cc3a4009f13762fe33ef50ae950ac64fc5af824dc538554"
     },
     {
       "path": "src/index.css",
