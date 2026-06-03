@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { PeekMascot } from './PeekMascot';
 import worthitScreen from '../../../assets/screen-worthit.png';
-import worthitReviewScreen from '../../../assets/screen-worthit-review.png';
+import blindboxScreen from '../../../assets/screen-blindbox.png';
 import storiesScreen from '../../../assets/screen-stories.png';
 import plansScreen from '../../../assets/screen-plans.png';
 
@@ -61,14 +61,14 @@ const ORANGE_CTA = '#E85C00';
 // ---------------------------------------------------------------------------
 // Real Peek app screens (official assets from the Peek Figma "latest" set).
 // Synced into /assets and rewritten to stable URLs on `code submit`.
-//   worthit        → "what made this move?" worth-it tagging + last-30-days grid
-//   worthit-review → rate spending worth it or not (Social category review)
-//   stories        → spending story ("your two selves", weekday vs weekend)
-//   plans          → monthly caps that keep the spending you actually value
+//   worthit  → "what made this move?" worth-it tagging + last-30-days grid
+//   blindbox → tap-to-collect insight reward / blind box
+//   stories  → spending story ("your two selves", weekday vs weekend)
+//   plans    → monthly caps that keep the spending you actually value
 // ---------------------------------------------------------------------------
 const SCREENS = {
   worthit: worthitScreen,
-  worthitReview: worthitReviewScreen,
+  blindbox: blindboxScreen,
   stories: storiesScreen,
   plans: plansScreen
 } as const;
@@ -548,7 +548,7 @@ export const PeekLandingPage = () => {
           </Reveal>
           <Reveal delay={100}>
             <div className="flex justify-center">
-              <AppScreen src={SCREENS.worthitReview} alt="Peek's worth-it review: mark each purchase guilt-free or not worth it, and turn your ratings into a clearer spending plan" rotate={2.5} className="max-w-[280px] sm:max-w-[300px]" />
+              <AppScreen src={SCREENS.blindbox} alt="Peek turns your worth-it answers into a collectible insight, a blind box that unlocks at the end of each cycle" rotate={2.5} className="max-w-[280px] sm:max-w-[300px]" />
             </div>
           </Reveal>
         </div>
